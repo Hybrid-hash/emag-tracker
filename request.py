@@ -12,7 +12,6 @@ with open('urls.txt') as f:
     my_list2=f.read().splitlines()
     for url in my_list2:
         response= requests.get(url)
-        time.sleep(1)
         soup = BeautifulSoup(response.text,'html.parser')
         product_name=soup.find('title').text
         newprice_str=soup.find('p', class_='product-new-price').text.strip().replace('Lei','')
