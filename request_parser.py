@@ -4,10 +4,6 @@ from numberspy import parseNumber
 from bs4 import BeautifulSoup
 
 
-
-
-
-
 with open('urls.txt') as f:
     my_list2=f.read().splitlines()
     for url in my_list2:
