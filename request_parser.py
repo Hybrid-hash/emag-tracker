@@ -5,8 +5,8 @@ from bs4 import BeautifulSoup
 
 
 with open('urls.txt') as f:
-    my_list2=f.read().splitlines()
-    for url in my_list2:
+    my_list=f.read().splitlines()
+    for url in my_list:
         response= requests.get(url)
         soup = BeautifulSoup(response.text,'html.parser')
         product_name=soup.find('title').text
