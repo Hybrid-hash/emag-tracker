@@ -5,3 +5,5 @@ __pycache__/urls_manage.cpython-37.pyc
 urls.txt
 data.csv
 
+__pycache__/database_manager.cpython-37.pyc
+track.db
