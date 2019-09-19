@@ -29,9 +29,11 @@ def create_database():
 def update_database(url,price,date,time):
     connection =sqlite3.connect('track.db')
     cursor = connection.cursor()
-    result = hashlib.md5(url.encode()) 
-    record_name = [result, url]
-    record_value = ['null',result, price, date, time]
+    result = hashlib.md5(url.encode())
+    result_hex= result.hexdigest()
+    #print(f'Hash is {result_hex}')
+    record_name = [result_hex, url]
+    record_value = [result_hex, price, date, time]
     # cursor.execute('insert into products values (?,?)',(result.hexdigest()),url)
     # cursor.execute('insert into products_price values (?,?,?,?,?)',1,result,price,date,time)
     #c.execute('insert into tablename values (?,?,?)', item)
@@ -40,8 +42,8 @@ def update_database(url,price,date,time):
     # sqlproductvalue = 'insert into products_price(id_product,price,date,time) values (?,?,?,?,?);'
     # cursor.execute(sqlproductvalue, record_value)
 
-    cursor.execute(f'INSERT INTO products VALUES ("{record_name[0]}","{record_name[1]}")')
-    cursor.execute(f'INSERT INTO products_price VALUES ("{record_value[0]}","{record_value[1]}","{record_value[2]}","{record_value[3]}","{record_value[4]}")')
+    #cursor.execute(f'INSERT INTO products VALUES ("{record_name[0]}","{record_name[1]}")')
+    cursor.execute(f'INSERT INTO products_price (id_product,price,date,time) VALUES ("{record_value[0]}","{record_value[1]}","{record_value[2]}","{record_value[3]}")')
     connection.commit()
     connection.close()
 
