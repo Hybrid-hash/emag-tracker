@@ -41,9 +41,28 @@ def update_database(url,price,date,time):
     # cursor.execute(sqlproduct, record_name)
     # sqlproductvalue = 'insert into products_price(id_product,price,date,time) values (?,?,?,?,?);'
     # cursor.execute(sqlproductvalue, record_value)
-
+    try:
+        #cur.execute("SELECT * FROM list WHERE InstitutionName=?", (Variable,))
+        sql_search = 'select * from products where id = ?;'
+        cursor.execute(sql_search, (result_hex,))
+        product_list=cursor.fetchall()
+        #print(type(product_list))
+        if not product_list:
+            print('New Product in Database')
+            cursor.execute(f'INSERT INTO products VALUES ("{record_name[0]}","{record_name[1]}")')
+            cursor.execute(f'INSERT INTO products_price (id_product,price,date,time) VALUES ("{record_value[0]}","{record_value[1]}","{record_value[2]}","{record_value[3]}")')
+        else:
+            cursor.execute(f'INSERT INTO products_price (id_product,price,date,time) VALUES ("{record_value[0]}","{record_value[1]}","{record_value[2]}","{record_value[3]}")')
+        
+    except:
+        print('Database error')
+        
+        
+    ## Execute the sql against the database (db)
+    ## The second argument is a tuple. Each element of the tuple will replace a ? in the sql statement.
+    
     #cursor.execute(f'INSERT INTO products VALUES ("{record_name[0]}","{record_name[1]}")')
-    cursor.execute(f'INSERT INTO products_price (id_product,price,date,time) VALUES ("{record_value[0]}","{record_value[1]}","{record_value[2]}","{record_value[3]}")')
+    #cursor.execute(f'INSERT INTO products_price (id_product,price,date,time) VALUES ("{record_value[0]}","{record_value[1]}","{record_value[2]}","{record_value[3]}")')
     connection.commit()
     connection.close()
 
