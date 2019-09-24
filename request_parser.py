@@ -35,7 +35,6 @@ def print_current_price():
             time_day= time.strftime("%Y/%m/%d")
             time_clk= time.strftime("%H:%M")
             total = total + float(newprice_value)
-            db_updater.update_database(url,float(newprice_value),time_day,time_clk)
-            #print(f'{product_name:><50},{newprice_value},{time_day},{time_clk}')
+            db_updater.update_database(url,float(newprice_value),time_day,time_clk,product_name)
             print(f"{product_name:<120}{newprice_value:<10}{time_day} {time_clk}")
     print(f'Total price is {total:.2f}')
