@@ -8,7 +8,8 @@ def create_database():
     sql = """ 
             CREATE TABLE IF NOT EXISTS products(
                 id VARCHAR(128) PRIMARY KEY,
-                name VARCHAR(256)
+                name VARCHAR(256),
+                product_name VARCHAR(256)
             );
     """
     cursor.execute(sql)
@@ -26,13 +27,13 @@ def create_database():
     connection.commit()
     connection.close()
 
-def update_database(url,price,date,time):
+def update_database(url,price,date,time,name):
     connection =sqlite3.connect('track.db')
     cursor = connection.cursor()
     result = hashlib.md5(url.encode())
     result_hex= result.hexdigest()
     #print(f'Hash is {result_hex}')
-    record_name = [result_hex, url]
+    record_name = [result_hex, url,name]
     record_value = [result_hex, price, date, time]
     # cursor.execute('insert into products values (?,?)',(result.hexdigest()),url)
     # cursor.execute('insert into products_price values (?,?,?,?,?)',1,result,price,date,time)
@@ -49,7 +50,7 @@ def update_database(url,price,date,time):
         #print(type(product_list))
         if not product_list:
             print('New Product in Database')
-            cursor.execute(f'INSERT INTO products VALUES ("{record_name[0]}","{record_name[1]}")')
+            cursor.execute(f'INSERT INTO products VALUES ("{record_name[0]}","{record_name[1]}","{record_name[2]}")')
             cursor.execute(f'INSERT INTO products_price (id_product,price,date,time) VALUES ("{record_value[0]}","{record_value[1]}","{record_value[2]}","{record_value[3]}")')
         else:
             cursor.execute(f'INSERT INTO products_price (id_product,price,date,time) VALUES ("{record_value[0]}","{record_value[1]}","{record_value[2]}","{record_value[3]}")')
